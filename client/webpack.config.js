@@ -1,15 +1,15 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const devBuild = process.env.NODE_ENV !== 'production';
-const nodeEnv = devBuild ? 'development' : 'production';
+const isDev = process.env.NODE_ENV !== 'production';
+const nodeEnv = isDev ? 'development' : 'production';
 
-config = {
+var config = {
   entry: [
     'es5-shim/es5-shim',
     'es5-shim/es5-sham',
     'babel-polyfill',
-    './app/bundles/HelloWorld/startup/HelloWorldApp',
+    './src',
   ],
 
   output: {
@@ -24,6 +24,7 @@ config = {
       'react-dom': path.resolve('./node_modules/react-dom'),
     },
   },
+
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -31,28 +32,29 @@ config = {
       },
     }),
   ],
+
   module: {
-    loaders: [
-      {
-        test: require.resolve('react'),
-        loader: 'imports?shim=es5-shim/es5-shim&sham=es5-shim/es5-sham',
-      },
-      {
-        test: /\.jsx?$/, loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-    ],
+    loaders: [{
+      test: require.resolve('react'),
+      loader: 'imports',
+      query: {
+        shim: 'es5-shim/es5-shim',
+        sham: 'es5-shim/es5-sham'
+      }
+    },{
+      test: /\.jsx?$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/,
+    }],
   },
 };
 
 module.exports = config;
 
-if (devBuild) {
+if (isDev) {
   console.log('Webpack dev build for Rails'); // eslint-disable-line no-console
   module.exports.devtool = 'eval-source-map';
 } else {
-  config.plugins.push(
-    new webpack.optimize.DedupePlugin()
-  );
   console.log('Webpack production build for Rails'); // eslint-disable-line no-console
+  config.plugins.push(new webpack.optimize.DedupePlugin());
 }
