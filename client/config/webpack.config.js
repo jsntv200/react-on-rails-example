@@ -1,5 +1,5 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 
 const isDev = process.env.NODE_ENV !== 'production';
 const nodeEnv = isDev ? 'development' : 'production';

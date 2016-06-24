@@ -8,6 +8,7 @@
   "scripts": {
     "postinstall": "cd client && npm install",
     "server": "foreman start -f Procfile.dev",
+    "server-hot": "foreman start -f Procfile.hot",
     "test": "rspec"
   }
 }

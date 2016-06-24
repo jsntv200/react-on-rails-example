@@ -1,4 +1,6 @@
-<h1 class="alert alert-info this-works">Hello World</h1>
+<h1 class="alert alert-info this-works">
+  Hello - <%= @data[:name] %>
+</h1>
 
 <%= react_component('HelloWorld', props: @data, prerender: false) %>
 

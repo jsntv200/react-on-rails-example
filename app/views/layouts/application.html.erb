@@ -2,8 +2,14 @@
 <html>
 <head>
   <title>ReactOnRails</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= env_stylesheet_link_tag(hot: 'application', static: 'application-static', media: 'all', 'data-turbolinks-track' => true) %>
+
+  <!-- Load the hot assets. -->
+  <%= env_javascript_include_tag(hot: 'http://localhost:3500/webpack-bundle.js') %>
+
+  <!-- Load the application -->
+  <%= env_javascript_include_tag(hot: 'application', static: 'application-static', 'data-turbolinks-track' => true) %>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
